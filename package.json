@@ -10,6 +10,7 @@
     "dronify": "index.js"
   },
   "dependencies": {
+    "mz": "^2.6.0",
     "vorpal": "^1.11.4",
     "vorpal-as-default": "^0.0.2"
   },

@@ -1,6 +1,7 @@
 import Vorpal from 'vorpal'
 import c from 'chalk'
 import asDefault from 'vorpal-as-default'
+import init from './commands/init'
 
 const vorpal = Vorpal()
 vorpal.find('exit').hidden()
@@ -8,7 +9,8 @@ vorpal.find('exit').hidden()
 vorpal
   .command('init', 'Sets up your project to use Helm with Drone')
   .action((args, callback) => {
-    console.log('initialising')
+    vorpal.ui.delimiter('> ')
+    init(vorpal.activeCommand)
   })
 
 vorpal
@@ -19,7 +21,7 @@ vorpal
   })
 
 vorpal
-  .delimiter('')
+  .delimiter(' ')
   .parse(process.argv)
   .use(asDefault, 'help')
   .exec('exit')
