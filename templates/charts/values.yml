@@ -1,0 +1,25 @@
+replicaCount: 1
+image:
+  repository: "||repo||"
+  tag: latest
+  pullPolicy: Always
+
+resources:
+  limits:
+    cpu: 100m
+    memory: 512Mi
+  requests:
+    cpu: 100m
+    memory: 512Mi
+
+secrets:
+
+service:
+  name: "||name||"
+  type: ClusterIP
+  internalPort: 3000
+  externalPort: 80
+
+ingress:
+  path: "/"
+  subdomain: "test"

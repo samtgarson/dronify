@@ -2,9 +2,7 @@ import Vorpal from 'vorpal'
 import c from 'chalk'
 import asDefault from 'vorpal-as-default'
 
-
 const vorpal = Vorpal()
-
 vorpal.find('exit').hidden()
 
 vorpal

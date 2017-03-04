@@ -1,0 +1,55 @@
+pipeline:
+  build_docker_image:
+    image: docker:1.12
+    environment:
+      - DOCKER_HOST=tcp://127.0.0.1:2375
+      - TAG=${DRONE_BRANCH}-${DRONE_COMMIT_SHA:0:7}
+    commands:
+      - docker login -u="${||repoUserEnv||}" -p="${||repoPassEnv||}" ||repoHost||
+      - docker build -t image .
+      - docker tag image ||repo||:latest
+      - docker tag image ||repo||:${TAG}
+      - docker push ||repo||
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+
+  helm_deploy_staging:
+    environment:
+      - DOCKER_LAUNCH_DEBUG=true
+    image: quay.io/ipedrazas/drone-helm
+    skip_tls_verify: true
+    chart: ./charts/||name||
+    release: ${DRONE_BRANCH}-||name||
+    values: 
+    prefix: STAGING
+    debug: true
+    when:
+      branch:
+        exclude: [ master ]
+
+  slack:
+    image: plugins/slack
+    channel: deploys
+    username: drone
+    template: >
+      {{ build.author }} finished building <||droneServer||/||org||/{{ repo.name }}/{{ build.number }}|{{ build.branch }} ({{ build.number }})> of *{{ repo.name }}*
+    when:
+      status: [ success ]
+
+  slack:
+    image: plugins/slack
+    channel: deploys
+    username: drone
+    template: >
+      {{ build.author }} failed building <||droneServer||/||org||/{{ repo.name }}/{{ build.number }}|{{ build.branch }} ({{ build.number }})> of *{{ repo.name }}*
+    when:
+      status: [ failure ]
+
+
+services:
+  dind:
+    image: docker:1.12-dind
+    privileged: true
+    command:
+      - "-s"
+      - "overlay"
