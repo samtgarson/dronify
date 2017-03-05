@@ -2714,7 +2714,7 @@ js-types@^1.0.0:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/js-types/-/js-types-1.0.0.tgz#d242e6494ed572ad3c92809fc8bed7f7687cbf03"
 
-js-yaml@^3.5.1:
+js-yaml@^3.5.1, js-yaml@^3.8.2:
   version "3.8.2"
   resolved "https://registry.yarnpkg.com/js-yaml/-/js-yaml-3.8.2.tgz#02d3e2c0f6beab20248d412c352203827d786721"
   dependencies:
@@ -4317,10 +4317,6 @@ tar@~2.2.1:
     block-stream "*"
     fstream "^1.0.2"
     inherits "2"
-
-test-listen@^1.0.0:
-  version "1.0.1"
-  resolved "https://registry.yarnpkg.com/test-listen/-/test-listen-1.0.1.tgz#d54cf18a8af087b625cee8b8534ec87cac8a992b"
 
 text-table@^0.2.0, text-table@~0.2.0:
   version "0.2.0"

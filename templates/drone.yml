@@ -21,13 +21,14 @@ pipeline:
     chart: ./charts/||name||
     release: ${DRONE_BRANCH}-||name||
     values: 
+      "image.tag=${DRONE_BRANCH}-${DRONE_COMMIT_SHA:0:7}"
     prefix: STAGING
     debug: true
     when:
       branch:
         exclude: [ master ]
 
-  slack:
+  slack_success:
     image: plugins/slack
     channel: deploys
     username: drone
@@ -36,7 +37,7 @@ pipeline:
     when:
       status: [ success ]
 
-  slack:
+  slack_failure:
     image: plugins/slack
     channel: deploys
     username: drone
