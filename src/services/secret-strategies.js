@@ -9,7 +9,7 @@ const confirmOverwrite = {
 
 const appName = readdirSync('charts')[0]
 
-export const secrets = {
+export const addSecrets = {
   path: `charts/${appName}/templates/secrets.yml`,
   action: async ({ key, cmd, content }) => {
     content.data = content.data || {}
@@ -19,7 +19,7 @@ export const secrets = {
   }
 }
 
-export const values = {
+export const addValues = {
   path: `charts/${appName}/values.yml`,
   action: async ({ key, content }) => {
     content.secrets = content.secrets || {}
@@ -28,7 +28,7 @@ export const values = {
   }
 }
 
-export const deployment = {
+export const addDeployment = {
   path: `charts/${appName}/templates/deployment.yml`,
   action: async ({ key, content, name, options }) => {
     const index = options['container-name']
@@ -43,26 +43,6 @@ export const deployment = {
           key:  key
         }
       }
-    })
-    return content
-  }
-}
-
-const keys = ['helm_deploy_staging', 'helm_deploy_production']
-const valuesToHash = str => str.split(',').reduce((h, s) => {
-  const [k, v] = s.split('=')
-  return { ...h, [k]: v }
-}, {})
-
-export const drone = {
-  path: 'drone.yml',
-  action: async ({key, content, name}) => {
-    keys.forEach(k => {
-      if (!content.pipeline[k]) return
-      const values = valuesToHash(content.pipeline[k].values)
-      values[`secrets.${key}`] = `\${${name}}`
-      content.pipeline[k].values = Object.keys(values)
-        .map(k => `${k}=${values[k]}`).sort().join(',')
     })
     return content
   }

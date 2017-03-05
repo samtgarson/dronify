@@ -2,7 +2,7 @@ import path from 'path'
 import { readFile, writeFile } from 'fs-promise'
 import yaml from 'js-yaml'
 
-export default class CreateSecret {
+export default class EditCharts {
   constructor ({ view, cmd, strategies }) {
     this.cmd = cmd
     this.strategies = strategies
@@ -11,12 +11,12 @@ export default class CreateSecret {
   async run () {
     let success = true
     for (var s of this.strategies) {
-      let success = await this.addToCharts(s)
+      let success = await this.runStrategy(s)
       if (!success) break
     }
     return success
   }
-  async addToCharts (strategy) {
+  async runStrategy (strategy) {
     const target = strategy.path
     const content = yaml.load(await readFile(target))
     const { view, cmd } = this

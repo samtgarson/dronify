@@ -1,7 +1,7 @@
 import Vorpal from 'vorpal'
 import asDefault from 'vorpal-as-default'
 import init from './commands/init'
-import secret from './commands/secret'
+import { add as secretAdd } from './commands/secret'
 
 const vorpal = Vorpal()
 vorpal.find('exit').hidden()
@@ -14,10 +14,10 @@ vorpal
   })
 
 vorpal
-  .command('secret <name> <value>', 'Add a secret to your config')
+  .command('secret add <name> <value>', 'Add a secret to your config')
   .option('-c, --container-name <container name>', 'Specify a container to add the secrets to. By default uses the first container in the list.')
   .action((args) => {
-    secret(vorpal.activeCommand, args)
+    secretAdd(vorpal.activeCommand, args)
   })
 
 vorpal
