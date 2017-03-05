@@ -22,4 +22,4 @@ service:
 
 ingress:
   path: "/"
-  subdomain: "test"
+  subdomain: "subdomain"
