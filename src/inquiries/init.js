@@ -1,9 +1,11 @@
 import c from 'chalk'
+
 const path = process.cwd().split('/')
 const defaultName = path[path.length - 1]
 
 const q = t => `${c.dim('>')} ${t} `
 const required = v => !!v.length
+// const gitOrgRegex = /(?::|\/)([^\/]+)/g
 
 const questions = [
   {
@@ -54,8 +56,8 @@ const questions = [
 ]
 
 const repoEnvVars = {
-  'quay.io': { repoUserEnv: 'QUAY_USERNAME', repoPassEnf: 'QUAY_PASSWORD' },
-  'hub.docker.com': { repoUserEnv: 'DOCKER_USERNAME', repoPassEnf: 'DOCKER_PASSWORD' }
+  'quay.io': { repoUserEnv: 'QUAY_USERNAME', repoPassEnv: 'QUAY_PASSWORD' },
+  'hub.docker.com': { repoUserEnv: 'DOCKER_USERNAME', repoPassEnv: 'DOCKER_PASSWORD' }
 }
 
 export default async cmd => {

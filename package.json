@@ -11,8 +11,9 @@
   },
   "dependencies": {
     "directory-tree": "^1.2.0",
+    "fs-promise": "^2.0.0",
     "get-installed-path": "^2.0.3",
-    "mz": "^2.6.0",
+    "mustache": "^2.3.0",
     "vorpal": "^1.11.4",
     "vorpal-as-default": "^0.0.2"
   },

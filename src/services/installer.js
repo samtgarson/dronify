@@ -2,6 +2,7 @@ import path from 'path'
 import getModulePath from 'get-installed-path'
 import dirTree from 'directory-tree'
 import Notifier from '../services/notifier'
+import File from '../models/file'
 
 export default class Installer extends Notifier {
   constructor (view) {
@@ -10,7 +11,7 @@ export default class Installer extends Notifier {
   }
   async run () {
     await this.setup()
-    this.copy(this.tree)
+    return this.copy(this.tree)
   }
   async setup () {
     this.target = process.cwd()
@@ -18,10 +19,11 @@ export default class Installer extends Notifier {
     this.source = path.resolve(source, 'templates')
     this.tree = dirTree(this.source)
   }
-  copy (node) {
+  async copy (node) {
     if (node.children) return node.children.forEach(this.copy.bind(this))
-    this.notify('start', node.name)
-    // copy here
-    this.notify('finish', node.name)
+    const file = new File(node, this.source)
+    this.notify('start', file)
+    await file.render(this.view, this.target)
+    this.notify('finish', file)
   }
 }

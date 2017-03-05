@@ -7,9 +7,9 @@ pipeline:
     commands:
       - docker login -u="${||repoUserEnv||}" -p="${||repoPassEnv||}" ||repoHost||
       - docker build -t image .
-      - docker tag image ||repo||:latest
-      - docker tag image ||repo||:${TAG}
-      - docker push ||repo||
+      - docker tag image ||&repo||:latest
+      - docker tag image ||&repo||:${TAG}
+      - docker push ||&repo||
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
 
@@ -32,7 +32,7 @@ pipeline:
     channel: deploys
     username: drone
     template: >
-      {{ build.author }} finished building <||droneServer||/||org||/{{ repo.name }}/{{ build.number }}|{{ build.branch }} ({{ build.number }})> of *{{ repo.name }}*
+      {{ build.author }} finished building <||&droneServer||/||org||/{{ repo.name }}/{{ build.number }}|{{ build.branch }} ({{ build.number }})> of *{{ repo.name }}*
     when:
       status: [ success ]
 
@@ -41,7 +41,7 @@ pipeline:
     channel: deploys
     username: drone
     template: >
-      {{ build.author }} failed building <||droneServer||/||org||/{{ repo.name }}/{{ build.number }}|{{ build.branch }} ({{ build.number }})> of *{{ repo.name }}*
+      {{ build.author }} failed building <||&droneServer||/||org||/{{ repo.name }}/{{ build.number }}|{{ build.branch }} ({{ build.number }})> of *{{ repo.name }}*
     when:
       status: [ failure ]
 
