@@ -1,8 +1,8 @@
 import Mustache from 'mustache'
 import { readFile, writeFile, mkdirs } from 'fs-promise'
-import path from 'path'
+import { join } from 'path'
 
-Mustache.tags = [ '||', '||' ]
+Mustache.tags = ['||', '||']
 
 export default class File {
   constructor ({ path, name }, source) {
@@ -23,9 +23,9 @@ export default class File {
   async render (view, to) {
     const template = await this.readFile()
     const rendered = Mustache.render(template, view)
-    const target = path.join(to, this.relative)
+    const target = join(to, this.relative)
     const renderedTarget = Mustache.render(target, view)
     await mkdirs(renderedTarget)
-    return writeFile(path.join(renderedTarget, this.name), rendered)
+    return writeFile(join(renderedTarget, this.name), rendered)
   }
 }

@@ -42,7 +42,7 @@ const config = {
       raw: true,
       entryOnly: false
     }),
-    new webpack.BannerPlugin({banner: '#! /usr/bin/env node', raw: true, entryOnly: true}),
+    new webpack.BannerPlugin({ banner: '#! /usr/bin/env node', raw: true, entryOnly: true }),
     new webpack.NamedModulesPlugin()
   ]
 }

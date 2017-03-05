@@ -19,11 +19,9 @@ export default class Installer extends Notifier {
     this.source = path.resolve(source, 'templates')
     this.tree = dirTree(this.source)
   }
-  async copy (node) {
-    if (node.children) return node.children.forEach(this.copy.bind(this))
+  copy (node) {
+    if (node.children) return node.children.map(this.copy.bind(this))
     const file = new File(node, this.source)
-    this.notify('start', file)
-    await file.render(this.view, this.target)
-    this.notify('finish', file)
+    return file.render(this.view, this.target)
   }
 }

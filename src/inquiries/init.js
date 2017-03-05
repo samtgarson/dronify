@@ -24,14 +24,14 @@ const questions = [
   {
     type: 'checkbox',
     name: 'lang',
-    message: q('Languages to be tested on Drone (optional)'),
+    message: `Languages to be tested on Drone ${c.dim('(optional)')}`,
     choices: ['ruby', 'javascript'],
     filter: arr => arr.reduce((hsh, l) => ({ ...hsh, [l]: true }), {})
   },
   {
     type: 'list',
     name: 'repoHost',
-    message: q('Container image registry'),
+    message: 'Container image registry',
     default: 'quay.io',
     choices: ['quay.io', 'hub.docker.com']
   },
@@ -52,7 +52,7 @@ const questions = [
     name: 'imagePullSecretName',
     message: q('K8S Secret Key'),
     default: ans => `${ans.org.toLowerCase()}-k8s-deploy-pull-secret`
-  },
+  }
 ]
 
 const repoEnvVars = {
@@ -60,7 +60,7 @@ const repoEnvVars = {
   'hub.docker.com': { repoUserEnv: 'DOCKER_USERNAME', repoPassEnv: 'DOCKER_PASSWORD' }
 }
 
-export default async cmd => {
+export default async (cmd) => {
   const answers = await cmd.prompt(questions)
   const view = {
     ...answers,
