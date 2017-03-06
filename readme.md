@@ -18,7 +18,8 @@ cd my-app
 dronify init
 ```
 
-- Add a secret
+- Add and remove secrets
 ```
-dronify secret MY_SECRET_KEY "my secret value"
+dronify secret add MY_SECRET_KEY "my secret value"
+dronify secret rm MY_SECRET_KEY
 ```
